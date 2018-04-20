@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>JSON</title>
+</head>
+<body>
+
+<script type="text/javascript">
+// javascript Object
+var obj = {name: "김기정", age: 30};
+alert(obj.name);
+alert(obj.constructor);
+
+
+
+var json = {"name":"김기정",
+			"age" : "20",
+			"address" : "서울시 중랑구 신내로"
+		   };
+		   
+console.log(typeof json);
+console.log(json.name);
+console.log(json.age);
+console.log(json.address);
+
+var arTxt = '["이대용","김대용","신대용","조대용","광대용"]';
+
+var arTxtToJson = JSON.parse(arTxt);
+for (var x in arTxtToJson){
+	console.log("arTxtToJson[x]: " + arTxtToJson[x]);
+}
+
+
+var list = [
+            {"ssn" : "1111", "name": "김기정"},
+            {"ssn" : "2222", "name": "이기정"},
+            {"ssn" : "3333", "name": "최기정"},
+           ];
+
+for ( var i in list) {
+	console.log(list[i].ssn);
+}
+
+
+var text = '{"name":"김기정", "age" : "20", "address" : "서울시 중랑구 신내로"}';
+
+// string -> object
+var json = JSON.parse(text);
+alert(json.name);
+alert(json.age);
+
+var str = JSON.stringify(json);
+alert(typeof str);
+
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+

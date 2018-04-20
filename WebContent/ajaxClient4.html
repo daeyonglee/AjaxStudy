@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax를 활용한 웹서버와 비동기 통신하기</title>
+<script src="js/ajax.js" type="text/javascript"></script>
+<script type="text/javascript">
+window.onload = function () {
+	
+	document.getElementById('sendBtn').onclick = function() {
+		var message = document.getElementsByName("message")[0].value;
+		sendMessage(message);
+	}
+}
+
+function sendMessage(message){
+	ajax({method:"GET",url:"ajaxServer2.jsp",param:"message="+message,callback:onMessage});
+}
+
+function onMessage(request){
+	var div = document.getElementById("display");
+	div.innerHTML = request.responseText;
+}
+</script>
+</head>
+<body>
+<h2>ajax를 활용한 웹서버 비동기 통신하기</h2>
+
+<input type="text" name="message"><input type="button" value="전송" id="sendBtn">
+<div id="display"></div>
+</body>
+</html>

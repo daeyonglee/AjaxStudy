@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<link rel="stylesheet" href="026.css" type="text/css">
+<script src="../js/ajax.js"></script>
+
+<script>
+window.onload = function(){
+	document.getElementById("button").onclick = function(){
+		var buttonLabel = this.firstChild.nodeValue;
+		var view = document.getElementById("view");
+		
+		if(buttonLabel == "숨기기"){
+			view.style.display = "none";
+			this.firstChild.nodeValue = "목록 수신";
+		}else{
+			view.style.display = "block";
+			this.firstChild.nodeValue = "숨기기";
+			ajax({
+				url: "bookList.jsp",
+				callback : onMessage
+			});
+		}
+	}
+}
+
+function onMessage(request){
+	var div = document.getElementById('view');
+	var xmlDocument = request.responseXML;
+	var books = xmlDocument.documentElement.childNodes;
+	var count = 0;
+	
+	var table  = "<table border='1'>";
+			table += "<tr>";
+	    table += "  <th>번호</th>";
+	    table += "  <th>제목</th>";
+	    table += "  <th>저자</th>";
+	    table += "  <th>출판사</th>";
+	    table += "  <th>가격</th>";
+	    table += "  <th>종류</th>";
+	    table += "</tr>";
+	for (var i in books) {
+		console.log(books[i]);
+		if (books[i].nodeType == 1) {
+			var book = books[i];
+			var bookChild = book.childNodes;
+			
+			table += "<tr>";
+			table += "  <td>" + ++count  + "</td>";
+
+			for (var j in bookChild) {
+				if (bookChild[j].nodeType == 1) {
+  				table += "<td>" + bookChild[j].innerHTML + "</td>";
+				}
+			}
+			
+			for (var x in book.attributes) {
+				if (book.attributes[x].name == 'kind'){
+					table += "<td>" + book.attributes[x].value + "</td>";
+				}
+			}
+			
+			table += "</tr>";
+		}
+	}
+	table += "</table>";
+	
+	div.innerHTML = table;
+}
+</script>
+
+</head>
+
+<body>
+<h2>서버에서 XML 데이터 수신 및 출력</h2>
+<button id="button">목록 수신</button>
+<div id="view">
+</div>
+</body>
+</html>
+
+
+

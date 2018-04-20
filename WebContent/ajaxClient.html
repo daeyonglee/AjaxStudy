@@ -20,7 +20,17 @@ try {
 }
 request.open("GET", "ajaxServer.jsp", true);
 request.onreadystatechange = function(){
-	console.log("수신한 데이터 : " + request.responseText);
+	if (request.readyState == 4){
+		if (request.status == 200){
+  		console.log("수신한 데이터 : " + request.responseText);
+		} else if (request.status == 400 || request.status == 404) {
+			alert("페이지를 찾을 수 없습니다.");
+		} else {
+			alert("일시적인 서버 장애가 발생하였습니다. 다시한번 시도하여 주세요.");
+		}
+	} else {
+		console.log("progressBar..........");
+	}
 }
 request.send();
 </script>
